@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>The bareback Mountains</h1>
+    <img
+        height="1440"
+        width="2560"
+        src="https://getwallpapers.com/wallpaper/full/f/f/e/499471.jpg"
+    />
+    <script>
+        function logEvent(name, info = {}) {
+            const url = "/event";
+            fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        time: new Date().getTime(),
+                        name,
+                        ...info
+                    }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(() => console.log("sent event"));
+
+        }
+        const landingTs = new Date();
+        window.addEventListener("load", () => {
+            const loadedTs = new Date();
+            const loadTime = loadedTs - landingTs;
+            console.log({loadTime});
+            logEvent("PAGE_LOADED", { loadTime });
+        });
+        function handlePageHide() {
+            logEvent("PAGE_HIDDEN");
+        }
+        window.addEventListener("pagehide", handlePageHide);
+    </script>
+    <script>
+        if(document.readyState === "loading"){
+            window.addEventListener("DOMContentLoaded", () => {
+                console.log("DOMContentLoaded");
+            });
+        }else {
+            console.log("document has already loaded");
+        }
+    </script>
+</body>
+</html>
